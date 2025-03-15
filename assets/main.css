@@ -2,45 +2,113 @@
 body {
     background-color: #0f1116;
     color: #ffffff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Doto";
+    font-family: "Doto", Cosolas, Geneva, Tahoma, sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings: "ROND" 0;
     margin: 20px;
-}
 
-#hero {
-    margin: 0;
+    min-height: 90vh;
+    /* min-width: 90vw; */
+
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    /* border: 8px solid white; */
+    /* border-radius: 100%; */
     align-items: center;
+
+
+    
 }
 
-#links {
-    width: 400px;
-    text-align: left;
-    font-size: x-large;
-    color: white;
+.container {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     flex-direction: column;
+    align-content: center;
+    
 }
 
-#links a {
-    color: white;
-    text-decoration: none;
-    margin-top: 20px;
-    margin: 10px 0px;
-    border: white 1px solid;
-    border-radius: 5px;
+#button {
+    font-family: "Doto";
+    font-family: "Doto", Consolas, Geneva, Tahoma, sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-variation-settings: "ROND" 0;
+
+    font-size: larger;
+    /* border-radius: 20%; */
     padding: 10px;
+    margin-top: 20px;
+
+    background-color: aliceblue;
+    border-color: aliceblue;
+
+    color: hsl(180, 100%, 25%);
+
+    border-top-left-radius: 2cqmax;
+    border-bottom-right-radius: 2cqmax;
 }
 
-#links a:hover {
-    background-color: #1f1f1f;
-    cursor: pointer;
+
+#button:hover  {
+    background-color: hsl(180, 100%, 25%);
+    /* border-radius: 20%; */
+    box-shadow: none;
+    border: none;
+    border-color: hsl(180, 100%, 25%);
+    color: aliceblue;
+    border-top-left-radius: 0%;
+    border-bottom-right-radius: 0%;
+    border-bottom-left-radius: 2cqmax;
+    border-top-right-radius: 2cqmax;
 }
 
-#header {
-    max-width: 1200px;
+
+#button:active {
+    background-color: aliceblue;
+    border-color: aliceblue;
+
+    color: hsl(180, 100%, 25%);
 }
 
 
+input {
+    border-style: dotted;
+    display: inline-block;
+    padding: 5px;
+    text-align: center;
+    color: hsl(180, 100%, 25%) ;
+    background-color: aliceblue;
+    border: 2px solid aliceblue;
+    border-top-left-radius: 2cqmax;
+    border-bottom-left-radius: 2cqmax;
+    padding-left: 0px;
+    border-color: hsl(180, 100%, 25%);
+
+}
+input::placeholder {
+    text-align: center;
+}
+
+#next {
+    padding: 5px;
+    margin-left: 5px; 
+    background-color: hsl(180, 100%, 25%);
+    border-color: aliceblue;
+    border-top-right-radius: 2cqmax;
+    border-bottom-right-radius: 2cqmax;
+    padding-right: 10px;
+    color: aliceblue
+}
+
+#next:active {
+    color: hsl(180, 100%, 25%);
+    background-color: aliceblue;
+    border-color: hsl(180, 100%, 25%);
+}
 
