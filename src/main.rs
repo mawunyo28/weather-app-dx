@@ -17,7 +17,9 @@ fn App() -> Element {
         document::Link {rel: "preconnect", href: "https://fonts.googleapis.com"}
         document::Link {rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "anonymous"}
         document::Link {href: "https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap", rel: "stylesheet"}
-        SecondPage {location:  "This" }
+        
+        SecondPage { location: "This" }
+
 
     }
 }
