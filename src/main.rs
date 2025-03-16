@@ -1,8 +1,18 @@
-use dioxus::{html::input, prelude::*};
+use dioxus:: prelude::*;
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("/assets/main.css");
 const _HEADER_SVG: Asset = asset!("/assets/header.svg");
+
+use dioxus_router::prelude::*;
+
+#[derive(Routable, Clone)]
+enum Route {
+    #[route("/")]
+    FirstPage {},
+    #[route("/:location")]
+    SecondPage {location: String}
+}
 
 fn main() {
     dioxus::launch(App);
@@ -17,16 +27,13 @@ fn App() -> Element {
         document::Link {rel: "preconnect", href: "https://fonts.googleapis.com"}
         document::Link {rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "anonymous"}
         document::Link {href: "https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap", rel: "stylesheet"}
-        
-        SecondPage { location: "This" }
-
-
+        Router::<Route> {}
     }
 }
 
 #[component]
 pub fn SecondPage(location: String) -> Element {
-    let location = "Accra";
+    let location = location.to_owned();
     let status = "Raining";
     rsx! {
         div {
@@ -47,17 +54,29 @@ pub fn SecondPage(location: String) -> Element {
 pub fn FirstPage() -> Element {
 
     rsx! {
+        
+        
         div {
             class: "container",
             h2 {id: "title", "Weather Application" },
             span {
                 input {type:"text", placeholder: "Location" , "What is your name"}
+
+                Link {to: Route::SecondPage { location: String::from("Tamso").to_owned() },
+
                 button { id: "next",  "Next" }
+            }
+
+                
               },
             
         }
+
+        Outlet::<Route> {}
     }
 }
+
+//Todo: Implement nav bar to take user back to firstpage(home page)
 
 
 
