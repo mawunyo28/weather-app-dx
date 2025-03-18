@@ -27,6 +27,10 @@ fn App() -> Element {
         document::Link {rel: "preconnect", href: "https://fonts.googleapis.com"}
         document::Link {rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "anonymous"}
         document::Link {href: "https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap", rel: "stylesheet"}
+        document::Script {
+            src: "https://kit.fontawesome.com/f747ddc7f0.js",
+            crossorigin: "anonymous"
+        }
         Router::<Route> {}
     }
 }
@@ -46,7 +50,19 @@ pub fn SecondPage(location: String) -> Element {
 
             "{location}, {status}",
             button {id:"button",  "Retry"}
+
+            Link {
+                to: Route::FirstPage {  },
+            
+
+            button {id:"back-button",  i {
+                class: "fa-solid fa-arrow-left",
+            }}
+
         }
+        }
+
+        Outlet::<Route> {}
     }
 }
 
@@ -64,7 +80,9 @@ pub fn FirstPage() -> Element {
 
                 Link {to: Route::SecondPage { location: String::from("Tamso").to_owned() },
 
-                button { id: "next",  "Next" }
+                button { id: "next",  i {
+                    class: "fa-solid fa-arrow-right"
+                } }
             }
 
                 

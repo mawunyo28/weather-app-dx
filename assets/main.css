@@ -112,3 +112,42 @@ input::placeholder {
     border-color: hsl(180, 100%, 25%);
 }
 
+#back-button {
+    font-family: "Doto";
+    font-family: "Doto", Consolas, Geneva, Tahoma, sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-variation-settings: "ROND" 0;
+
+    font-size: larger;
+    /* border-radius: 20%; */
+    padding: 10px;
+    margin-top: 20px;
+
+    background-color: aliceblue;
+    border-color: aliceblue;
+
+    color: hsl(180, 100%, 25%);
+
+    border-radius: 2cqmax;
+}
+
+
+#back-button:hover  {
+    background-color: hsl(180, 100%, 25%);
+    /* border-radius: 20%; */
+    box-shadow: none;
+    border: none;
+    border-color: hsl(180, 100%, 25%);
+    color: aliceblue;
+    
+}
+
+
+#back-button:active {
+    background-color: aliceblue;
+    border-color: aliceblue;
+
+    color: hsl(180, 100%, 25%);
+}
