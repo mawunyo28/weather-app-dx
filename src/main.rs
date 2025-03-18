@@ -1,10 +1,13 @@
-use dioxus:: prelude::*;
+use dioxus::{desktop::wry::http::request,  prelude::*};
+pub mod weather;
+use weather::Weather;
+
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("/assets/main.css");
 const _HEADER_SVG: Asset = asset!("/assets/header.svg");
+const API_KEY: &str = "1dbfc060cacd42909e3180510251403";
 
-use dioxus_router::prelude::*;
 
 #[derive(Routable, Clone)]
 enum Route {
@@ -37,19 +40,47 @@ fn App() -> Element {
 
 #[component]
 pub fn SecondPage(location: String) -> Element {
-    let location = location.to_owned();
-    let status = "Raining";
+
+    let location = location.clone();
+
+    let request_url = format!(
+        "http://api.weatherapi.com/v1/current.json?key={}&q={}&aqi=no",
+        API_KEY,
+        location
+    );
+
+    
+        let mut weather_conditon = use_resource(move || {
+                let request_url = request_url.clone();
+
+                async  move {
+                    reqwest::get(&request_url)
+                    .await
+                    .unwrap()
+                    .json::<Weather>()
+                    .await
+                    .unwrap()
+                }
+        });
+
+        
+        let location = weather_conditon.unwrap().location.name;
+        let status = weather_conditon.unwrap().current.condition.text;
+        
+
     rsx! {
         div {
             class: "container",
             h2 {id: "title", "Weather Application" }
 
             img{
-                src: "https://cdn.weatherapi.com/weather/64x64/day/116.png"
+                src: weather_conditon.clone().unwrap().current.condition.icon
             }
 
             "{location}, {status}",
-            button {id:"button",  "Retry"}
+            button {id:"button", onclick: move |_| {
+                weather_conditon.restart();
+            },  "Retry"}
 
             Link {
                 to: Route::FirstPage {  },
@@ -94,7 +125,7 @@ pub fn FirstPage() -> Element {
     }
 }
 
-//Todo: Implement nav bar to take user back to firstpage(home page)
+
 
 
 
