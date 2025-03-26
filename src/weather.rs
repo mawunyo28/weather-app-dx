@@ -1,6 +1,6 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize,Serialize, Clone)]
 pub struct Weather {
     pub location: Location,
     pub current: CurrentWeather,
@@ -29,13 +29,13 @@ pub struct Weather {
     pub gust_kph: f32,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Serialize, Clone)]
 pub struct Location {
     pub name: String,
     pub country: String,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Serialize, Clone)]
 pub struct CurrentWeather {
     pub temp_c: f32,
     pub temp_f: f32,
@@ -43,7 +43,7 @@ pub struct CurrentWeather {
     pub condition: WeatherCondition,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Serialize, Clone)]
 pub struct WeatherCondition {
     pub text: String,
     pub icon: String,

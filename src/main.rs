@@ -1,20 +1,17 @@
-use dioxus::{desktop::wry::http::request,  prelude::*};
+use dioxus::prelude::*;
 pub mod weather;
 use weather::Weather;
-
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("/assets/main.css");
 const _HEADER_SVG: Asset = asset!("/assets/header.svg");
-const API_KEY: &str = "1dbfc060cacd42909e3180510251403";
-
 
 #[derive(Routable, Clone)]
 enum Route {
     #[route("/")]
     FirstPage {},
     #[route("/:location")]
-    SecondPage {location: String}
+    SecondPage { location: String },
 }
 
 fn main() {
@@ -40,33 +37,9 @@ fn App() -> Element {
 
 #[component]
 pub fn SecondPage(location: String) -> Element {
+    let weather = use_server_future(move ||  fetch_weather(location.clone()))?;
 
-    let location = location.clone();
-
-    let request_url = format!(
-        "http://api.weatherapi.com/v1/current.json?key={}&q={}&aqi=no",
-        API_KEY,
-        location
-    );
-
-    
-        let mut weather_conditon = use_resource(move || {
-                let request_url = request_url.clone();
-
-                async  move {
-                    reqwest::get(&request_url)
-                    .await
-                    .unwrap()
-                    .json::<Weather>()
-                    .await
-                    .unwrap()
-                }
-        });
-
-        
-        let location = weather_conditon.unwrap().location.name;
-        let status = weather_conditon.unwrap().current.condition.text;
-        
+   
 
     rsx! {
         div {
@@ -74,17 +47,15 @@ pub fn SecondPage(location: String) -> Element {
             h2 {id: "title", "Weather Application" }
 
             img{
-                src: weather_conditon.clone().unwrap().current.condition.icon
+                src: "fake.com"
             }
 
-            "{location}, {status}",
-            button {id:"button", onclick: move |_| {
-                weather_conditon.restart();
-            },  "Retry"}
+            "Tamso",
+            button {id:"button",   "Retry"}
 
             Link {
                 to: Route::FirstPage {  },
-            
+
 
             button {id:"back-button",  i {
                 class: "fa-solid fa-arrow-left",
@@ -99,10 +70,9 @@ pub fn SecondPage(location: String) -> Element {
 
 #[component]
 pub fn FirstPage() -> Element {
-
     rsx! {
-        
-        
+
+
         div {
             class: "container",
             h2 {id: "title", "Weather Application" },
@@ -116,17 +86,29 @@ pub fn FirstPage() -> Element {
                 } }
             }
 
-                
+
               },
-            
+
         }
 
         Outlet::<Route> {}
     }
 }
 
+#[server]
+async fn fetch_weather(location: String) -> Result<Weather, ServerFnError> {
+    let request_url = format!(
+        "https://api.weatherapi.com/v1/current.json?key={}&q={}&aqi=no
+    ",
+        "1dbfc060cacd42909e3180510251403", location
+    );
 
+    let weather = reqwest::Client::new()
+        .get(request_url)
+        .send()
+        .await?
+        .json::<Weather>()
+        .await?;
 
-
-
-
+    Ok(weather)
+}
